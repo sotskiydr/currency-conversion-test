@@ -1,0 +1,39 @@
+.form {
+  display: flex;
+
+  flex-direction: column;
+  width: 400px;
+  margin: 0 auto;
+}
+.from,
+.to {
+  display: flex;
+  margin-bottom: 20px;
+}
+.input-from,
+.input-to {
+  width: 300px;
+  height: 35px;
+  border: 1px solid silver;
+  border-radius: 3px;
+  outline: none;
+  text-align: center;
+  padding: 5px;
+  font-size: 24px;
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
+.select-from,
+.select-to {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100px;
+  height: 35px;
+  padding: 5px;
+  width: 100%;
+  position: relative;
+  border: 1px solid silver;
+  border-radius: 3px;
+  outline: none;
+}

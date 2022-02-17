@@ -1,7 +1,7 @@
 import { getAllCurrency, onConvert } from "../../api/api-services";
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-
+import styles from "./Converter.module.scss";
 const Converter = () => {
   const [currency, setCurrency] = useState([]);
   const [baseValue, setValue] = useState({
@@ -83,21 +83,12 @@ const Converter = () => {
     }
   };
 
-  const onReset = () => {
-    setValue((prevState) => {
-      return {
-        ...prevState,
-        inputFrom: "",
-        inputTo: "",
-      };
-    });
-  };
-
   return (
-    <form>
-      <label>
-        From
+    <form className={styles.form}>
+      <div className={styles.from}>
         <input
+          placeholder="change value"
+          className={styles["input-from"]}
           name="input-from"
           type="number"
           value={baseValue.inputFrom}
@@ -105,25 +96,29 @@ const Converter = () => {
             handleChange(e, "from");
           }}
         />
-      </label>
-      <select
-        name="from"
-        value={baseValue.optionFrom}
-        onChange={(e) => {
-          handleChange(e, "fromSelect");
-        }}
-      >
-        {currency.map(([key]) => {
-          return (
-            <option key={nanoid()} value={key}>
-              {key}
-            </option>
-          );
-        })}
-      </select>
-      <label>
-        To
+
+        <select
+          className={styles["select-from"]}
+          name="from"
+          value={baseValue.optionFrom}
+          onChange={(e) => {
+            handleChange(e, "fromSelect");
+          }}
+        >
+          {currency.map(([key]) => {
+            return (
+              <option className={styles["option"]} key={nanoid()} value={key}>
+                {key}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+
+      <div className={styles.to}>
         <input
+          placeholder="change value"
+          className={styles["input-to"]}
           name="input-to"
           type="number"
           value={baseValue.inputTo}
@@ -131,25 +126,24 @@ const Converter = () => {
             handleChange(e, "to");
           }}
         />
-      </label>
-      <select
-        name="to"
-        value={baseValue.optionTo}
-        onChange={(e) => {
-          handleChange(e, "toSelect");
-        }}
-      >
-        {currency.map(([key]) => {
-          return (
-            <option key={nanoid()} value={key}>
-              {key}
-            </option>
-          );
-        })}
-      </select>
-      <button type="button" onClick={onReset}>
-        reset
-      </button>
+
+        <select
+          className={styles["select-to"]}
+          name="to"
+          value={baseValue.optionTo}
+          onChange={(e) => {
+            handleChange(e, "toSelect");
+          }}
+        >
+          {currency.map(([key]) => {
+            return (
+              <option className={styles["option"]} key={nanoid()} value={key}>
+                {key}
+              </option>
+            );
+          })}
+        </select>
+      </div>
     </form>
   );
 };
