@@ -39,38 +39,53 @@ const Converter = () => {
 
   const handleChange = (e, action) => {
     if (e.target.value <= 0) return;
-    if (action === "from") {
-      setValue((prevState) => {
-        return { ...prevState, inputFrom: e.target.value };
-      });
-      getConvertData(
-        baseValue.optionFrom,
-        baseValue.optionTo,
-        e.target.value,
-        action
-      );
-    }
-    if (action === "to") {
-      setValue((prevState) => {
-        return { ...prevState, inputTo: e.target.value };
-      });
-      getConvertData(
-        baseValue.optionTo,
-        baseValue.optionFrom,
-        e.target.value,
-        action
-      );
+
+    switch (action) {
+      case "from":
+        setValue((prevState) => {
+          return { ...prevState, inputFrom: e.target.value };
+        });
+        getConvertData(
+          baseValue.optionFrom,
+          baseValue.optionTo,
+          e.target.value,
+          action
+        );
+        break;
+      case "to":
+        setValue((prevState) => {
+          return { ...prevState, inputTo: e.target.value };
+        });
+        getConvertData(
+          baseValue.optionTo,
+          baseValue.optionFrom,
+          e.target.value,
+          action
+        );
+        break;
+      case "fromSelect":
+        setValue((prevState) => {
+          return { ...prevState, optionFrom: e.target.value };
+        });
+        break;
+      case "toSelect":
+        setValue((prevState) => {
+          return { ...prevState, optionTo: e.target.value };
+        });
+        break;
+      default:
+        return null;
     }
   };
 
-  const handleSelectChange = (e, action) => {
-    action === "from"
-      ? setValue((prevState) => {
-          return { ...prevState, optionFrom: e.target.value };
-        })
-      : setValue((prevState) => {
-          return { ...prevState, optionTo: e.target.value };
-        });
+  const onReset = () => {
+    setValue((prevState) => {
+      return {
+        ...prevState,
+        inputFrom: "",
+        inputTo: "",
+      };
+    });
   };
 
   return (
@@ -90,7 +105,7 @@ const Converter = () => {
         name="from"
         value={baseValue.optionFrom}
         onChange={(e) => {
-          handleSelectChange(e, "from");
+          handleChange(e, "fromSelect");
         }}
       >
         {currency.map(([key]) => {
@@ -116,7 +131,7 @@ const Converter = () => {
         name="to"
         value={baseValue.optionTo}
         onChange={(e) => {
-          handleSelectChange(e, "to");
+          handleChange(e, "toSelect");
         }}
       >
         {currency.map(([key]) => {
@@ -127,7 +142,9 @@ const Converter = () => {
           );
         })}
       </select>
-      <button type="submit">Submit</button>
+      <button type="button" onClick={onReset}>
+        reset
+      </button>
     </form>
   );
 };
