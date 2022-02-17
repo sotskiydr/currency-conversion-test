@@ -38,7 +38,12 @@ const Converter = () => {
   };
 
   const handleChange = (e, action) => {
-    if (e.target.value <= 0) return;
+    if (e.target.value < 1) {
+      setValue((prevState) => {
+        return { ...prevState, inputFrom: "", inputTo: "" };
+      });
+      return;
+    }
 
     switch (action) {
       case "from":
