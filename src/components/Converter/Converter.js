@@ -35,6 +35,13 @@ const Converter = () => {
         })
       );
     }
+    if (action === "change-from" || action === "change-to") {
+      return onConvert(from, to, amount).then((data) =>
+        setValue((prevState) => {
+          return { ...prevState, inputTo: Object.values(data.result)[0] };
+        })
+      );
+    }
   };
 
   const handleChange = (e, action) => {
@@ -72,11 +79,25 @@ const Converter = () => {
         setValue((prevState) => {
           return { ...prevState, optionFrom: e.target.value };
         });
+        if (!baseValue.inputFrom) return;
+        getConvertData(
+          e.target.value,
+          baseValue.optionTo,
+          baseValue.inputFrom,
+          "change-from"
+        );
         break;
       case "toSelect":
         setValue((prevState) => {
           return { ...prevState, optionTo: e.target.value };
         });
+        if (!baseValue.inputTo) return;
+        getConvertData(
+          baseValue.optionTo,
+          e.target.value,
+          baseValue.inputTo,
+          "change-to"
+        );
         break;
       default:
         return null;
